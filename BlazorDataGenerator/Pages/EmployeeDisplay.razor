@@ -1,0 +1,99 @@
+﻿@page "/display"
+@inject DataBuilder data
+
+<PageTitle>Generated Employees</PageTitle>
+
+<h3>Employee List
+    <button type="button" class="btn btn-outline-primary" style="float: right" @onclick="LoadData">
+        Display More Employees
+    </button>
+    <button type="button" class="btn btn-outline-primary" style="float: right" @onclick="SaveData">
+        Save Changes
+    </button>
+</h3>                             
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Salary</th>
+            <th>Recruitment Year</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Street</th>
+            <th>Age</th>
+            <th>Position</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ( var emp in employee)
+        {
+           <tr>
+                <td>@emp.Id</td>
+                <td>@emp.FirstName</td>
+                <td>@emp.LastName</td>
+                <td>@emp.Salary</td>
+                <td>@emp.Recruitment</td>
+                <td>@emp.Country</td>
+                <td>@emp.City</td>
+                <td>@emp.Street</td>
+                <td>@emp.Age</td>
+                <td>@emp.Position</td>
+                <td>@emp.Email</td>
+           </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    List<Employee> employee = new();
+    List<Employee> dbEmployee = new();
+
+    private void LoadData()
+    {
+        var results = data.GenerateEmployees().Take(10);
+        employee.AddRange(results);
+        dbEmployee.AddRange(results);
+    }
+
+    private void SaveData()
+    {
+        BDGDbContext context = new();
+        context.Employees.AddRange(dbEmployee);
+        context.SaveChanges();
+
+        dbEmployee.Clear();
+    }
+
+    private void ChangeData()
+    {
+        BDGDbContext context = new();
+        context.Employees.AddRange(dbEmployee);
+        context.SaveChanges();
+
+        dbEmployee.Clear();
+    }
+
+    private void DeleteData()
+    {
+        BDGDbContext context = new();
+        context.Employees.AddRange(dbEmployee);
+        context.SaveChanges();
+
+        dbEmployee.Clear();
+    }
+
+    private void ClearData()
+    {
+        BDGDbContext context = new();
+        context.Employees.AddRange(dbEmployee);
+        context.SaveChanges();
+
+        dbEmployee.Clear();
+    }
+
+}
