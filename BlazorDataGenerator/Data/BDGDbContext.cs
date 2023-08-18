@@ -7,8 +7,10 @@ namespace BlazorDataGenerator.Data
 {
     public class BDGDbContext : DbContext
     {
+       
         public BDGDbContext()
         {
+
         }
 
         public BDGDbContext(DbContextOptions<BDGDbContext> options) : base(options)
@@ -16,8 +18,10 @@ namespace BlazorDataGenerator.Data
 
         }
 
+      
 
         public DbSet<Employee> Employees { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,6 +36,8 @@ namespace BlazorDataGenerator.Data
             }
         }
 
+        
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>(entity =>
@@ -44,7 +50,7 @@ namespace BlazorDataGenerator.Data
             entity.Property(i => i.FirstName).HasColumnName("First_Name").HasColumnType("character varying").HasMaxLength(100);
             entity.Property(i => i.LastName).HasColumnName("Last_Name").HasColumnType("character varying").HasMaxLength(100);
             entity.Property(i => i.Salary).HasColumnName("Salary").HasColumnType("integer");
-            entity.Property(i => i.Recruitment).HasColumnName("Recruitment").HasColumnType("integer");
+            entity.Property(i => i.Recruitment).HasColumnName("Recruitment").HasColumnType("date");
             entity.Property(i => i.Country).HasColumnName("Country").HasColumnType("character varying");
             entity.Property(i => i.Street).HasColumnName("Street").HasColumnType("character varying");
             entity.Property(i => i.City).HasColumnName("City").HasColumnType("character varying");
@@ -56,6 +62,6 @@ namespace BlazorDataGenerator.Data
 
 
 
-        } 
+        }
     }
 }

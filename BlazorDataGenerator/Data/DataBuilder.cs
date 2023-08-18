@@ -19,11 +19,9 @@ namespace BlazorDataGenerator.Data
                 .RuleFor(i => i.FirstName, i => i.Person.FirstName)
                 .RuleFor(i => i.LastName, i => i.Person.LastName)
                 .RuleFor(i => i.Position, f => f.PickRandom<Positions>())
-                .RuleFor(i => i.Recruitment, i => i.Random.Int(2010, 2023))
                 .RuleFor(i => i.Salary, i => i.Random.Int(3000, 50000))
-                .RuleFor(i => i.Id, i => i.Random.Int(1000,9999));
-
-            
+                .RuleFor(i => i.Id, i => i.Random.Int(1000, 9999))
+                .RuleFor(i => i.Recruitment, i => i.Date.PastDateOnly(23));
         }
 
         public IEnumerable<Employee> GenerateEmployees()

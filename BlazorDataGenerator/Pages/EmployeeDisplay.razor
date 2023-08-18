@@ -1,5 +1,6 @@
 ﻿@page "/display"
 @inject DataBuilder data
+@inject NavigationManager nvmanager
 
 <PageTitle>Generated Employees</PageTitle>
 
@@ -7,8 +8,8 @@
     <button type="button" class="btn btn-outline-primary" style="float: right" @onclick="LoadData">
         Display More Employees
     </button>
-    <button type="button" class="btn btn-outline-primary" style="float: right" @onclick="SaveData">
-        Save Changes
+    <button type="button" class="btn btn-outline-primary" style="float: right" @onclick= "() => NavigateToCreate()">
+        Create New Employee
     </button>
 </h3>                             
 
@@ -26,74 +27,57 @@
             <th>Age</th>
             <th>Position</th>
             <th>Email</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach ( var emp in employee)
-        {
-           <tr>
-                <td>@emp.Id</td>
-                <td>@emp.FirstName</td>
-                <td>@emp.LastName</td>
-                <td>@emp.Salary</td>
-                <td>@emp.Recruitment</td>
-                <td>@emp.Country</td>
-                <td>@emp.City</td>
-                <td>@emp.Street</td>
-                <td>@emp.Age</td>
-                <td>@emp.Position</td>
-                <td>@emp.Email</td>
-           </tr>
-        }
-    </tbody>
+            @foreach (var emp in context.Employees)
+            {
+                <tr>
+                    <td>@emp.Id</td>
+                    <td>@emp.FirstName</td>
+                    <td>@emp.LastName</td>
+                    <td>@emp.Salary</td>
+                    <td>@emp.Recruitment</td>
+                    <td>@emp.Country</td>
+                    <td>@emp.City</td>
+                    <td>@emp.Street</td>
+                    <td>@emp.Age</td>
+                    <td>@emp.Position</td>
+                    <td>@emp.Email</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary" style="float: right" @onclick = "() => Navigation(emp.Id.ToString())">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
 </table>
 
 
 @code {
-    List<Employee> employee = new();
-    List<Employee> dbEmployee = new();
+  
+    List<Employee> dbemployee = new();
+    BDGDbContext context = new();
 
-    private void LoadData()
+    public void LoadData()
     {
-        var results = data.GenerateEmployees().Take(10);
-        employee.AddRange(results);
-        dbEmployee.AddRange(results);
+        var results = data.GenerateEmployees().Take(10).ToList();
+        dbemployee.AddRange(results);
+        context.Employees.AddRange(dbemployee);
+        context.SaveChanges();
+        dbemployee.Clear();
     }
 
-    private void SaveData()
+    public void NavigateToCreate()
     {
-        BDGDbContext context = new();
-        context.Employees.AddRange(dbEmployee);
-        context.SaveChanges();
-
-        dbEmployee.Clear();
+        nvmanager.NavigateTo("/create");
     }
 
-    private void ChangeData()
+    public void Navigation(string? employeeId)
     {
-        BDGDbContext context = new();
-        context.Employees.AddRange(dbEmployee);
-        context.SaveChanges();
-
-        dbEmployee.Clear();
-    }
-
-    private void DeleteData()
-    {
-        BDGDbContext context = new();
-        context.Employees.AddRange(dbEmployee);
-        context.SaveChanges();
-
-        dbEmployee.Clear();
-    }
-
-    private void ClearData()
-    {
-        BDGDbContext context = new();
-        context.Employees.AddRange(dbEmployee);
-        context.SaveChanges();
-
-        dbEmployee.Clear();
+        nvmanager.NavigateTo($"/edit/{employeeId}");
     }
 
 }

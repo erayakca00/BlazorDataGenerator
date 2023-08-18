@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -23,13 +24,13 @@ namespace BlazorDataGenerator.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     First_Name = table.Column<string>(type: "character varying", maxLength: 100, nullable: true),
                     Last_Name = table.Column<string>(type: "character varying", maxLength: 100, nullable: true),
-                    Salary = table.Column<int>(type: "integer", nullable: false),
-                    Recruitment = table.Column<int>(type: "integer", nullable: false),
+                    Salary = table.Column<int>(type: "integer", nullable: true),
+                    Recruitment = table.Column<DateOnly>(type: "date", nullable: false),
                     Country = table.Column<string>(type: "character varying", nullable: true),
                     City = table.Column<string>(type: "character varying", nullable: true),
                     Street = table.Column<string>(type: "character varying", nullable: true),
-                    Age = table.Column<int>(type: "integer", nullable: false),
-                    Position = table.Column<string>(type: "character varying", nullable: false),
+                    Age = table.Column<int>(type: "integer", nullable: true),
+                    Position = table.Column<string>(type: "character varying", nullable: true),
                     Email = table.Column<string>(type: "character varying", nullable: true)
                 },
                 constraints: table =>

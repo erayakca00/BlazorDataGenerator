@@ -16,7 +16,7 @@ namespace BlazorDataGenerator.Data
 
         public int? Salary { get; set; }
 
-        public int? Recruitment { get; set; }
+        public DateOnly Recruitment { get; set; }
 
         public string? Country { get; set; }
 

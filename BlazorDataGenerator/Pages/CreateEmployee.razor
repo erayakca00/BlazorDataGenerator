@@ -1,0 +1,96 @@
+﻿@page "/create"
+@using BlazorDataGenerator.Data
+@using Microsoft.AspNetCore.Mvc
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using System.Threading.Tasks
+@using Microsoft.EntityFrameworkCore
+@using System.Data.Entity;
+ 
+<h3>CreateEmployee</h3>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Id</td>
+            <td><input type="text" name="Id" @bind="employee.Id" /></td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td><input type="text" name="FirstName" @bind="employee.FirstName"/></td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td><input type="text" name="LastName"  @bind="employee.LastName"/></td>
+        </tr>
+        <tr>
+            <td>Salary</td>
+            <td><input type="number" name="Salary" @bind="employee.Salary"/></td>
+        </tr>
+        <tr>
+            <td>Recruitment</td>
+            <td><input type="text" name="Recruitment"  @bind="employee.Recruitment"/></td>
+        </tr>
+        <tr>
+            <td>Country</td>
+            <td><input type="text" name="Country"  @bind="employee.Country"/></td>
+        </tr>
+        <tr>
+            <td>City</td>
+            <td><input type="text" name="City" @bind="employee.City"/></td>
+        </tr>
+        <tr>
+            <td>Street</td>
+            <td><input type="text" name="Street" @bind="employee.Street" /></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td><input type="number" name="Age" @bind="employee.Age" /></td>
+        </tr>
+        <tr>
+            <td>Position</td>
+            <td><input type="text" name="Position" @bind="employee.Position" /></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="email" name="Email" @bind="employee.Email"/></td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" class="btn btn-outline-primary" @onclick="AddEmployee">
+                    Add New Employee
+                </button>
+            </td> 
+        </tr>
+    </tbody>
+</table>
+
+@code {
+
+    [Inject]
+    BDGDbContext context { get; set; }
+
+
+    public Employee employee;
+
+    protected override void OnInitialized()
+    {
+        employee = new Employee();
+    }
+
+    public async Task AddEmployee()
+    {
+        if( employee.Id != null)
+        {    
+            context.Add(employee);
+            await context.SaveChangesAsync();
+        }
+        
+    }
+}

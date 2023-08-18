@@ -1,4 +1,3 @@
-//using BlazorDataGenerator.Controllers;
 using BlazorDataGenerator.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -17,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddTransient<DataBuilder>();
+
 
 
 var app = builder.Build();
